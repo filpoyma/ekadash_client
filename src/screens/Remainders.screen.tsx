@@ -4,24 +4,27 @@ import ScreenView from '../components/shared/view/Screen.view';
 import { AppText, HeaderText } from '../components/shared/text';
 import dayjs from 'dayjs';
 import { BaseButton } from '../components/shared/buttons';
-import { MainScreenProps } from '../typedefs/screens/main.screen';
-import { Screens } from '../constants/navigator.constants';
+import { BackButtonHeader } from '../components/widgets/headers';
+import { RemindersScreenProps } from '../typedefs/screens/remainders.screen';
 
-const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
+const Reminders: React.FC<RemindersScreenProps> = ({ navigation }) => {
   const { height } = useWindowDimensions();
   return (
     <ScreenView fullArea={true} screenPaddings={false}>
       <ImageBackground
-        source={require('../assets/images/bgWithAvatar.jpg')}
+        source={require('../assets/images/bg.jpg')}
         style={{ flex: 1 }}
         resizeMode={'cover'}>
         <View
           style={{
             flexGrow: 1,
             alignItems: 'center',
-            padding: 8,
+            padding: 16,
           }}>
-          <HeaderText size={'h2'}>{dayjs().format("DD MMMM [']YY")}</HeaderText>
+          <BackButtonHeader
+            onBackButtonPress={navigation.goBack}
+            title={dayjs().format("DD MMMM [']YY")}
+          />
           <View
             style={{
               alignItems: 'center',
@@ -44,10 +47,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
               paddingBottom: 30,
               gap: 8,
             }}>
-            <BaseButton
-              text={'Напоминания'}
-              onPress={() => navigation.navigate(Screens.reminders)}
-            />
+            <BaseButton text={'Напоминания'} />
             <BaseButton text={'Календарь'} />
           </View>
         </View>
@@ -56,4 +56,4 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
   );
 };
 
-export default MainScreen;
+export default Reminders;

@@ -17,9 +17,9 @@ import { Colors } from './constants/colors.constants';
 // import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { deviceLocale } from './utils/days.utils';
 import BootSplash from 'react-native-bootsplash';
 import store from './redux/store';
+import AppService from './services/App.service';
 
 // dayjs.extend(duration);
 // dayjs.extend(customParseFormat);
@@ -38,11 +38,15 @@ const navTheme = {
 
 const App = () => {
   React.useEffect(() => {
-    const deviceLanguage = deviceLocale();
-    console.log(deviceLanguage);
-    dayjs.locale(deviceLanguage);
-    BootSplash.hide({ fade: true }).catch(console.error);
+    AppService.initialize()
+      .finally(() => {
+        BootSplash.hide({ fade: true }).catch(console.error);
+      })
+      .catch(err => {
+        console.error('Error during app initialize', err?.message);
+      });
   }, []);
+
   return (
     <SafeAreaProvider>
       <NavigationContainer theme={navTheme}>

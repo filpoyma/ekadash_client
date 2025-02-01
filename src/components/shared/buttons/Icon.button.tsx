@@ -1,16 +1,16 @@
-import React, {useMemo} from 'react';
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
-import {Colors} from '../../../constants/colors.constants';
+import React, { useMemo } from 'react';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { Colors } from '../../../constants/colors.constants';
 
-import {IIconButtonProps} from './interfaces';
+import { IIconButtonProps } from './interfaces';
 
 const IconButton: React.FC<IIconButtonProps> = ({
   iconStyle,
   onPress,
   size = 32,
   Icon,
-  color = Colors.white,
-  backgroundColor = Colors.grey,
+  color = Colors.black,
+  backgroundColor = Colors.transparent,
   containerType,
   containerSize = size * 1.8333,
   colorAttribute = 'fill',
@@ -22,8 +22,7 @@ const IconButton: React.FC<IIconButtonProps> = ({
     if (!containerType) {
       return undefined;
     }
-    const borderRadius =
-      containerType === 'rounded' ? containerSize / 2 : containerSize / 4;
+    const borderRadius = containerType === 'rounded' ? containerSize / 2 : containerSize / 4;
     const shadowStyles = hasShadow
       ? {
           shadowColor: Colors.grey,

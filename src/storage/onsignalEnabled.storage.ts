@@ -1,4 +1,4 @@
-import { createStorageItem } from '~utils/storage.utils';
+import { createStorageItem } from '../utils/storage.utils';
 
 const onsignalEnabledStorageItem = createStorageItem<boolean>('onsignalEnabled');
 
