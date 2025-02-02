@@ -8,7 +8,6 @@ const OneSignalService = {
     OneSignal.initialize(process.env.ONESIGNAL_APP_ID!);
 
     // Request permission for push notifications
-    await OneSignal.Notifications.requestPermission(true);
 
     // Handle notifications received while the app is in the foreground
     // OneSignal.Notifications.addEventListener('foregroundWillDisplay', event => {
@@ -36,7 +35,7 @@ const OneSignalService = {
   setExternalUserId() {
     const deviceId = store.getState().auth.deviceId;
     console.log('file-OneSignal.service.ts setID:', deviceId);
-    if (deviceId !== null) OneSignal.login(deviceId);
+    if (deviceId) OneSignal.login(deviceId);
   },
 
   async disableSubscription() {
@@ -51,17 +50,17 @@ const OneSignalService = {
     await onsignalEnabledStorageItem.set(true);
   },
 
-  // async getPermissions() {
-  //   // Get the current push subscription state
-  //   const pushSubscription = await OneSignal.User.pushSubscription.getStatus();
-  //
-  //   return {
-  //     isPushDisabled: pushSubscription.isOptedOut,
-  //     hasNotificationPermission: isAndroid
-  //       ? pushSubscription.hasNotificationPermission
-  //       : pushSubscription.status === 1, // 1 = authorized on iOS
-  //   };
-  // },
+  isPushEnabled() {
+    return onsignalEnabledStorageItem.get();
+  },
+
+  async requestPermissions() {
+    await OneSignal.Notifications.requestPermission(true);
+  },
+
+  getPermission() {
+    return OneSignal.Notifications.getPermissionAsync();
+  },
 };
 
 export default OneSignalService;

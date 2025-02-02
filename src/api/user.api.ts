@@ -1,66 +1,23 @@
-import RNFetchBlob from 'react-native-blob-util';
-import baseApi from '~api/base.api';
-import store from '~redux/store';
-import { IUploadItem, IUserPointsResponse, IUserUpdateRequestData } from '~typedefs/api/user.api';
-import { IUser } from '~typedefs/models/User.model';
-import { API_URL } from '~constants/api.constants';
+import { IUser, IUserUpdate } from '../typedefs/models/User.model';
+import baseApi from './base.api';
 
 const UserApi = {
-  basePath: 'users',
+  basePath: 'user',
 
-  getUrl(path: string) {
-    return `${this.basePath}/${path}/`;
+  getUrl(path?: string) {
+    return path ? `${this.basePath}/${path}/` : this.basePath;
   },
 
-  async getUser(id: number): Promise<IUser> {
-    const url = this.getUrl(`user-info/${id}`);
+  getUser(deviceId: string): Promise<IUser> {
+    const url = this.getUrl();
 
-    return baseApi.get(url).json();
+    return baseApi.get(url, { searchParams: { deviceId } }).json();
   },
 
-  updateUser(fieldsToUpdate: IUserUpdateRequestData): Promise<IUser> {
-    const url = this.getUrl('registration-steps');
+  updateUser(fieldsToUpdate: IUserUpdate): Promise<IUser> {
+    const url = this.getUrl('update');
 
     return baseApi.patch(url, { json: fieldsToUpdate }).json();
   },
-
-  getUserPoints(page: string): Promise<IUserPointsResponse> {
-    // const url = this.getUrl(`${this.basePath}/points-history/?page=${page}`);
-
-    return baseApi.get(`${this.basePath}/points-history/?page=${page}`).json();
-  },
-  // loadPhoto(formData: FormData) {
-  //   const url = this.getUrl('registration-steps');
-  //   return baseApi.patch(url, formData, {
-  //     headers: { 'Content-Type': 'multipart/form-data' },
-  //   });
-  // },
-
-  uploadImages(data: IUploadItem[]) {
-    const url = `${API_URL}/${this.basePath}/registration-steps/`;
-
-    return RNFetchBlob.fetch(
-      'PATCH',
-      url,
-      {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${store.getState().auth.token}`,
-      },
-      data,
-    );
-  },
-
-  deleteUser(userId: number) {
-    const url = this.getUrl(`delete/${userId}`);
-
-    return baseApi.delete(url).json();
-  },
-
-  verifyPhone(phone: string) {
-    const url = this.getUrl('verify_phone');
-
-    return baseApi.post(url, { json: { phone } });
-  },
 };
-
 export default UserApi;

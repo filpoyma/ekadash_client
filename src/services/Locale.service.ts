@@ -1,11 +1,11 @@
-import { deviceLocale } from '../utils/days.utils';
 import dayjs from 'dayjs';
+import store from '../redux/store';
 
 const LocaleService = {
   initialize() {
-    const deviceLanguage = deviceLocale();
+    const deviceLanguage = store.getState().auth.user?.language;
     console.log('deviceLanguage', deviceLanguage);
-    dayjs.locale(deviceLanguage);
+    dayjs.locale(deviceLanguage || 'en');
   },
 };
 

@@ -1,15 +1,22 @@
 import baseApi from './base.api';
-import { ILoginRequestData, ILoginResponseData } from '~typedefs/api/auth.api';
+import { ILoginRequestData, ISignUpRequestData } from '../typedefs/api/auth.api';
+import { IUser } from '../typedefs/models/User.model';
 
 const AuthApi = {
-  basePath: 'users',
+  basePath: 'auth',
 
   getUrl(path: string) {
     return `${this.basePath}/${path}/`;
   },
 
-  login(data: ILoginRequestData): Promise<ILoginResponseData> {
-    const url = this.getUrl('login');
+  signIn(data: ILoginRequestData): Promise<IUser> {
+    const url = this.getUrl('signIn');
+
+    return baseApi.post(url, { json: data }).json();
+  },
+
+  signUp(data: ISignUpRequestData): Promise<IUser> {
+    const url = this.getUrl('signUp');
 
     return baseApi.post(url, { json: data }).json();
   },

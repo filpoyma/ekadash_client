@@ -1,11 +1,11 @@
-import React, {useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import React, { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
 
-import {Colors} from '../../../constants/colors.constants';
-import {SCREEN_PADDINGS} from '../../../constants/screen.constants';
+import { Colors } from '../../../constants/colors.constants';
+import { SCREEN_PADDINGS } from '../../../constants/screen.constants';
 
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {IScreenViewProps} from './interfaces';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { IScreenViewProps } from './interfaces';
 
 const styles = StyleSheet.create({
   screenView: {
@@ -31,7 +31,7 @@ const ScreenView: React.FC<IScreenViewProps> = ({
       StyleSheet.flatten([
         styles.screenView,
         screenPaddings ? styles.screenPaddings : undefined,
-        {backgroundColor},
+        { backgroundColor },
         style,
       ]),
     [backgroundColor, screenPaddings, style],

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import 'react-native-reanimated';
 import 'react-native-gesture-handler';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { StatusBar, StyleSheet, View, Platform, NativeModules } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import dayjs from 'dayjs';
@@ -20,6 +20,7 @@ import timezone from 'dayjs/plugin/timezone';
 import BootSplash from 'react-native-bootsplash';
 import store from './redux/store';
 import AppService from './services/App.service';
+import { isLocalDev } from './constants/platform.constants';
 
 // dayjs.extend(duration);
 // dayjs.extend(customParseFormat);
@@ -35,6 +36,8 @@ const navTheme = {
     background: Colors.background,
   },
 };
+
+if (isLocalDev) require('react-native-devsettings');
 
 const App = () => {
   React.useEffect(() => {
