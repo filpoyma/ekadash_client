@@ -1,5 +1,6 @@
 import { isIOS } from '../constants/platform.constants';
 import { NativeModules } from 'react-native';
+import dayjs from 'dayjs';
 
 export const deviceLocale = () => {
   const locale = isIOS
@@ -20,4 +21,8 @@ export const dayToText = (day: number) => {
     case 3:
       return 'три дня';
   }
+};
+
+const convertToMoscowTime = (date: Date | string | number) => {
+  return dayjs(date).tz('Europe/Moscow');
 };

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { Slider } from '@miblanchard/react-native-slider';
-import { HeaderText } from '../../../../components/shared/text';
 import { Colors } from '../../../../constants/colors.constants';
 
 const ThumbComponent = () => <View style={styles.thumb} />;
@@ -30,6 +29,7 @@ const HorizontalSlider = ({
     setSliderValue(value[0]);
   };
   const { width } = useWindowDimensions();
+  // alert(width);
   const onSlidingCompleteHandler = (value: number[]) => {
     onSlidingComplete(name, Math.round(value[0]));
   };
@@ -97,7 +97,7 @@ const trackStyles = (width: number) =>
     container: {
       height: 11,
       borderRadius: 6,
-      width: width - 200,
+      width: width / 1.8,
       shadowColor: Colors.black,
       shadowOffset: {
         width: 0,

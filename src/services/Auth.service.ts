@@ -7,7 +7,8 @@ import { deviceLocale } from '../utils/days.utils';
 const AuthService = {
   async initialize() {
     const deviceIdStorage = await this.getDeviceIdFromStorage();
-    const deviceId = deviceIdStorage || (await require('react-native-device-info').getUniqueId());
+    const deviceId =
+      deviceIdStorage || (await require('react-native-device-info').getUniqueId());
     store.dispatch(authActions.setDeviceId(deviceId));
     if (!deviceIdStorage) await this.signUp(deviceId);
     else await this.signIn(deviceId);
@@ -23,8 +24,9 @@ const AuthService = {
 
   async signUp(deviceId: string) {
     await this.saveDeviceIdToStorage(deviceId);
+    const timezone = (await require('react-native-localize')).getTimeZone();
     const language = deviceLocale();
-    const user = await AuthApi.signUp({ deviceId, language });
+    const user = await AuthApi.signUp({ deviceId, language, timezone });
     store.dispatch(authActions.setUser(user));
   },
 

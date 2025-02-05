@@ -7,6 +7,7 @@ export interface ILoginRequestData {
 export interface ISignUpRequestData {
   deviceId: string;
   language: string;
+  timezone: string;
 }
 
 export interface ILoginResponseData extends IUser {

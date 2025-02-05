@@ -10,6 +10,11 @@ declare module '*.png' {
   export default value;
 }
 
+declare module '*.json' {
+  const value: any;
+  export default value;
+}
+
 declare module 'react-native-config' {
   interface IConfig {
     API_URL_DEV: string;

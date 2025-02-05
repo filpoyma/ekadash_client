@@ -7,8 +7,6 @@ const OneSignalService = {
   async initialize() {
     OneSignal.initialize(process.env.ONESIGNAL_APP_ID!);
 
-    // Request permission for push notifications
-
     // Handle notifications received while the app is in the foreground
     // OneSignal.Notifications.addEventListener('foregroundWillDisplay', event => {
     //   const notification = event.getNotification();
@@ -22,7 +20,9 @@ const OneSignalService = {
     OneSignal.Notifications.addEventListener('click', event => {
       const notification = event.notification;
       // console.log('Notification clicked:', notification);
-      Alert.alert(`${notification.body} ${notification.title}`);
+      Alert.alert(notification.title || '', notification.body, [
+        { text: 'OK', onPress: () => console.log('OK Pressed') },
+      ]);
     });
 
     this.setExternalUserId();

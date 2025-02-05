@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import './languages/i18n.config';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';

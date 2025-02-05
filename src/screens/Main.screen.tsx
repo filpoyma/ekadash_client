@@ -6,9 +6,12 @@ import dayjs from 'dayjs';
 import { BaseButton } from '../components/shared/buttons';
 import { MainScreenProps } from '../typedefs/screens/main.screen';
 import { Screens } from '../constants/navigator.constants';
+import { useTranslation } from 'react-i18next';
+import FloatingButton from '../components/widgets/buttons/FloatingButton';
 
 const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
   const { height } = useWindowDimensions();
+  const { t } = useTranslation();
   return (
     <ScreenView fullArea={true} screenPaddings={false}>
       <ImageBackground
@@ -22,6 +25,7 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
             padding: 8,
           }}>
           <HeaderText size={'h2'}>{dayjs().format("DD MMMM [']YY")}</HeaderText>
+
           <View
             style={{
               alignItems: 'center',
@@ -45,11 +49,12 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
               gap: 8,
             }}>
             <BaseButton
-              text={'Напоминания'}
+              text={t('buttons.reminders')}
               onPress={() => navigation.navigate(Screens.reminders)}
             />
             <BaseButton text={'Календарь'} />
           </View>
+          <FloatingButton />
         </View>
       </ImageBackground>
     </ScreenView>

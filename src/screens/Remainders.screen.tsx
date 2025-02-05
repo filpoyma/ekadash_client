@@ -17,6 +17,7 @@ import { IUserUpdate } from '../typedefs/models/User.model';
 import { emailRegex } from '../constants/regex.constants';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/selectors';
+import { isNetworkAvailable } from '../utils/helpers.utils';
 
 const valuesData = {
   daysRemindPush: 0,
@@ -26,22 +27,30 @@ const valuesData = {
 };
 
 const Reminders: React.FC<RemindersScreenProps> = ({ navigation }) => {
-  const [remindersValues, setRemindersValues] = React.useState<typeof valuesData>(valuesData);
   const user = useSelector(selectUser);
+  const [remindersValues, setRemindersValues] = React.useState<typeof valuesData>({
+    daysRemindPush: user?.daysRemindPush || 0,
+    tg: user?.tg || '',
+    email: user?.email || '',
+    emailError: '',
+  });
 
   React.useEffect(() => {
-    if (remindersValues.daysRemindPush > 0) {
-      (async () => {
-        const isPushEnabled = await OneSignalService.isPushEnabled();
-        if (!isPushEnabled) OneSignalService.enableSubscription().catch(console.error);
-        try {
+    (async () => {
+      try {
+        await isNetworkAvailable();
+        if (remindersValues.daysRemindPush > 0) {
+          const isPushEnabled = await OneSignalService.isPushEnabled();
+          if (!isPushEnabled) OneSignalService.enableSubscription().catch(console.error);
           const isPushPermission = await OneSignalService.getPermission();
           if (!isPushPermission) await OneSignalService.requestPermissions();
-        } catch (err) {
-          console.error('Push permission err:', err);
         }
-      })();
-    } else OneSignalService.disableSubscription().catch(console.error);
+        if (remindersValues.daysRemindPush === 0)
+          OneSignalService.disableSubscription().catch(console.error);
+      } catch (err) {
+        console.error('Push permission err:', err);
+      }
+    })();
   }, [remindersValues.daysRemindPush]);
 
   const updateUser = (user: IUserUpdate) => {
