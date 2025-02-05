@@ -52,7 +52,10 @@ const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
               text={t('buttons.reminders')}
               onPress={() => navigation.navigate(Screens.reminders)}
             />
-            <BaseButton text={'Календарь'} />
+            <BaseButton
+              text={'Календарь'}
+              onPress={() => navigation.navigate(Screens.calendar)}
+            />
           </View>
           <FloatingButton />
         </View>

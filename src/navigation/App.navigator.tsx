@@ -7,7 +7,8 @@ import {
 } from '../constants/navigator.constants';
 
 import MainScreen from '../screens/Main.screen';
-import Reminders from '../screens/Remainders.screen';
+import RemindersScreen from '../screens/Remainders.screen';
+import CalendarScreen from '../screens/Calendar.screen';
 
 const AppStack = createStackNavigator<MainStackParamList>();
 
@@ -15,7 +16,8 @@ const AppNavigator = () => {
   return (
     <AppStack.Navigator screenOptions={defaultScreenOptions} initialRouteName={Screens.main}>
       <AppStack.Screen name={Screens.main} component={MainScreen} />
-      <AppStack.Screen name={Screens.reminders} component={Reminders} />
+      <AppStack.Screen name={Screens.reminders} component={RemindersScreen} />
+      <AppStack.Screen name={Screens.calendar} component={CalendarScreen} />
     </AppStack.Navigator>
   );
 };

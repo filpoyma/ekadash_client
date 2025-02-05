@@ -1,11 +1,13 @@
 export enum Screens {
   main = 'main',
   reminders = 'reminders',
+  calendar = 'calendar',
 }
 
 export type MainStackParamList = {
   [Screens.main]: undefined;
   [Screens.reminders]: undefined;
+  [Screens.calendar]: undefined;
 };
 
 export const defaultScreenOptions = {
